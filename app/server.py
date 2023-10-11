@@ -63,9 +63,9 @@ async def upload_file(background_tasks: BackgroundTasks, doc_file: UploadFile = 
     if not os.path.exists("instance"):
             os.makedirs("instance")
 
-    file_name =  "instance/" + document_id + "/" + doc_file.filename
+    file_name = f"instance/{document_id}/{doc_file.filename}"
 
-    os.mkdir("instance/" + document_id)
+    os.mkdir(f"instance/{document_id}")
 
     async with aiofiles.open(file_name, 'wb') as out_file:
             while chunk := await doc_file.read(DEFAULT_CHUNK_SIZE):
@@ -81,20 +81,14 @@ async def upload_file(background_tasks: BackgroundTasks, doc_file: UploadFile = 
 
 def extract_text_from_file(file_name: str):
     file_type = file_name.split(".")[-1]
-    if file_type == "pdf":
-        return extract_text_from_pdf(file_name)
-    elif file_type == "docx":
+    if file_type == "docx":
         return extract_text_from_docx(file_name)
+    elif file_type in ["mp3", "wav", "webm", "mp4"]:
+        return extract_text_from_audio(file_name)
+    elif file_type == "pdf":
+        return extract_text_from_pdf(file_name)
     elif file_type == "pptx":
         return extract_text_from_pptx(file_name)
-    elif file_type == "mp3":
-        return extract_text_from_audio(file_name)
-    elif file_type == "wav":
-        return extract_text_from_audio(file_name)
-    elif file_type == "webm":
-        return extract_text_from_audio(file_name)
-    elif file_type == "mp4":
-        return extract_text_from_audio(file_name)
 
 @app.post("/api/upload-url", response_model = upload_document_response)
 async def upload_url(url: str = Form()):

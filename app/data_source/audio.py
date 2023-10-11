@@ -19,6 +19,5 @@ def extract_text_from_audio(audio_file_path: str) -> str:
         source = {'buffer': audio, 'mimetype': 'audio/wav'}
         response = deepgram.transcription.prerecorded(source, {'punctuate': True})
 
-    transcript = response["results"]["channels"][0]["alternatives"][0]["transcript"]
-    return transcript
+    return response["results"]["channels"][0]["alternatives"][0]["transcript"]
 

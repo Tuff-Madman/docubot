@@ -12,9 +12,4 @@ def extract_text_from_pdf(pdf_file: str) -> str:
     assert pdf_file.split(".")[-1] == "pdf" #check the file path is pdf
     reader = PdfReader(pdf_file)
     pages = reader.pages
-    pdf_text = ""
-    
-    for page in pages:
-        pdf_text += page.extract_text() + " "
-
-    return pdf_text
+    return "".join(f"{page.extract_text()} " for page in pages)

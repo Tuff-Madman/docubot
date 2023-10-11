@@ -13,8 +13,7 @@ def init_pinecone_index(PINECONE_API_KEY: str, environment: str, index_name: str
             metric = metric
         )
 
-    index = pinecone.Index(index_name)
-    return index
+    return pinecone.Index(index_name)
 
 def upload_document(embedding, index: pinecone.Index, documents: list, document_id: str, batch_size: int = 64):
         for i in range(0, len(documents), batch_size):
@@ -36,5 +35,4 @@ def get_context(embedding, document_id: str, index: pinecone.Index, query: str, 
                      top_k=top_k, 
                      include_metadata=True,
                      filter={"document_id": document_id})
-    context = " ".join([x["metadata"]['text'] for x in xc["matches"]])
-    return context
+    return " ".join([x["metadata"]['text'] for x in xc["matches"]])
