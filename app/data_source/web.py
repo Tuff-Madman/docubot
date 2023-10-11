@@ -12,12 +12,7 @@ def extract_text_from_web(web_url: str) -> str:
 
     loader = WebBaseLoader("https://mount2lib.webflow.io/")
     data = loader.load()
-    web_text = ""
-
-    for page in data:
-        web_text += page.page_content + " "
-    
-    return web_text
+    return "".join(f"{page.page_content} " for page in data)
     
 
 

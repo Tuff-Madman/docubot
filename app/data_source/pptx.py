@@ -14,10 +14,5 @@ def extract_text_from_pptx(pptx_file: str) -> str:
 
     loader = UnstructuredPowerPointLoader(pptx_file)
     pages = loader.load()
-    pptx_text = ""
-
-    for page in pages:
-        pptx_text += page.page_content + " "
-    
-    return pptx_text
+    return "".join(f"{page.page_content} " for page in pages)
 

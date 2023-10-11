@@ -23,9 +23,4 @@ def extract_text_from_youtube(youtube_url: str) -> str:
 
 
 def format_transcript(result: list) -> str:
-    transcript = ""
-  
-    for sentence in result:
-        transcript += sentence["text"] + " "
-    
-    return transcript
+    return "".join(sentence["text"] + " " for sentence in result)
